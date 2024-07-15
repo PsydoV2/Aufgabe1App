@@ -9,5 +9,5 @@ Klassische App zum Anzeigen des Wetters
 
 ### Preview 
 
-[Imgur](https://imgur.com/P2iXMHn)
+<blockquote class="imgur-embed-pub" lang="en" data-id="iduCq5x"><a href="https://imgur.com/iduCq5x">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 [Imgur](https://imgur.com/iduCq5x)
