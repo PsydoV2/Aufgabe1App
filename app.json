@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Aufgabe1App",
-    "slug": "Aufgabe1App",
+    "name": "Weather",
+    "slug": "Weather",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,11 +17,17 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#283644"
+      },
+      "package": "com.psydo.Weather"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "17980690-196a-4c89-8505-6f2e958d22eb"
+      }
     }
   }
 }
