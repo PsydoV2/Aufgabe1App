@@ -14,6 +14,8 @@ interface HeadProps {
   temp: number | undefined;
   feeltemp: number | undefined;
   setCity: (city: string, lat: number, long: number) => void;
+  maxTemp: string | undefined;
+  minTemp: string | undefined;
 }
 
 interface City {
@@ -65,6 +67,11 @@ export default function Head(props: HeadProps) {
         <View style={styles.headMain}>
           <Text style={styles.realTemp}>{props.temp}°C</Text>
           <Text style={styles.feelTemp}>{props.feeltemp}°C</Text>
+        </View>
+        <View style={styles.headBottom}>
+          <Text style={styles.headBottomText}>
+            {props.maxTemp}°C/{props.minTemp}°C
+          </Text>
         </View>
       </View>
 
@@ -130,10 +137,12 @@ const styles = StyleSheet.create({
   realTemp: {
     fontSize: 50,
     fontWeight: "900",
+    color: "#efb643",
   },
   feelTemp: {
     fontSize: 30,
     marginTop: -10,
+    color: "gray",
   },
   changeCityPage: {
     position: "absolute",
@@ -146,6 +155,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    zIndex: 2,
   },
   changePageCloseButton: {
     color: "#efb643",
@@ -179,5 +189,14 @@ const styles = StyleSheet.create({
   cityDetails: {
     color: "white",
     fontSize: 14,
+  },
+  headBottom: {
+    margin: 20,
+    marginTop: -20,
+  },
+  headBottomText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 17,
   },
 });

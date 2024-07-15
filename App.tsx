@@ -1,8 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Head from "./components/Head";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
+import Hourly from "./components/Hourly";
+import Daily from "./components/Daily";
+import { Feather } from "@expo/vector-icons";
 
 interface City {
   name: string;
@@ -64,6 +67,7 @@ export default function App() {
 
   function getCity(name: string, latitude: number, longitude: number) {
     setCity({ name, latitude, longitude });
+    console.log(response);
   }
 
   useEffect(() => {
@@ -87,32 +91,137 @@ export default function App() {
     getWeather();
   }, [currentCity]);
 
+  const now = new Date();
+  const currentHour = now.getHours();
+
   return (
-    <View style={styles.body}>
+    <ScrollView style={styles.body}>
       <StatusBar style="light" />
       <LinearGradient
         // Background Linear Gradient
         colors={["#283644", "#111928"]}
         style={styles.body}
       />
+
       <Head
         time={response?.current?.time}
         city={currentCity.name}
         temp={response?.current.temperature_2m}
         feeltemp={response?.current.apparent_temperature}
         setCity={getCity}
-      ></Head>
-    </View>
+        maxTemp={response?.daily.temperature_2m_max[0]}
+        minTemp={response?.daily.temperature_2m_min[0]}
+      />
+
+      <ScrollView horizontal style={styles.hourlyCon}>
+        {response?.hourly.time.map((_, index) =>
+          index <= 24 ? (
+            <Hourly
+              key={index}
+              hour={response.hourly.time[index + currentHour]}
+              temperature={response.hourly.temperature_2m[index + currentHour]}
+              feelTemp={
+                response.hourly.apparent_temperature[index + currentHour]
+              }
+            ></Hourly>
+          ) : null
+        )}
+      </ScrollView>
+
+      <ScrollView horizontal style={styles.dailyCon}>
+        {response?.daily.time.map((_, index) => (
+          <Daily
+            key={index}
+            date={response.daily.time[index + 1]}
+            tempMax={response.daily.temperature_2m_max[index + 1]}
+            tempMin={response.daily.temperature_2m_min[index + 1]}
+          ></Daily>
+        ))}
+      </ScrollView>
+
+      <View style={styles.sunTimes}>
+        <View style={styles.sunCon}>
+          <Feather name="sunrise" size={84} color="#efb643" />
+          <Text style={styles.sunTime}>
+            {response?.daily.sunrise[0] != undefined
+              ? response?.daily.sunrise[0].split("T")[1]
+              : ""}
+          </Text>
+        </View>
+
+        <View style={styles.sunCon}>
+          <Feather name="sunset" size={84} color="#efb643" />
+          <Text style={styles.sunTime}>
+            {response?.daily.sunset[0] != undefined
+              ? response?.daily.sunset[0].split("T")[1]
+              : ""}
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   body: {
     minHeight: "100%",
+    height: "100%",
     backgroundColor: "#283644",
     position: "absolute",
     left: 0,
     right: 0,
     top: 0,
+  },
+  hourlyCon: {
+    height: 200,
+    width: "95%",
+    backgroundColor: "#2b3b4a",
+    margin: "auto",
+    borderRadius: 20,
+    display: "flex",
+    flexDirection: "row",
+    // alignItems: "center",
+    paddingLeft: 10,
+    marginBottom: 10,
+    paddingTop: "5%",
+  },
+  dailyCon: {
+    height: 200,
+    width: "95%",
+    backgroundColor: "#2b3b4a",
+    margin: "auto",
+    borderRadius: 20,
+    display: "flex",
+    flexDirection: "row",
+    // alignItems: "center",
+    paddingLeft: 10,
+    marginBottom: 10,
+    paddingTop: "5%",
+  },
+  sunTimes: {
+    height: 200,
+    width: "95%",
+    backgroundColor: "#2b3b4a",
+    margin: "auto",
+    borderRadius: 20,
+    marginBottom: 10,
+
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  sunCon: {
+    height: "90%",
+    width: "45%",
+    // backgroundColor: "red",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sunTime: {
+    color: "white",
+    fontSize: 30,
+    marginTop: 10,
   },
 });
