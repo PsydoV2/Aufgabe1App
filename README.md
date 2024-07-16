@@ -13,3 +13,7 @@ Klassische App zum Anzeigen des Wetters
 <img src="https://i.imgur.com/P2iXMHn.png" alt="Preview1" style="border-radius: 10px;" />
 <img src="https://i.imgur.com/iduCq5x.png" alt="Preview2" style="border-radius: 10px;" />
 </div>
+
+### Download Android
+
+[Download](https://expo.dev/artifacts/eas/9hbbaYLtpMFq4m55rARNc2.apk)
